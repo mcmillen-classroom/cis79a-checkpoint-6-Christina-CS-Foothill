@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">CameraApp</string>
     <string name="take_pic">Take Pic</string>
+    <string name="share_pic">Share Picture</string>
+    <string name="email_button">Email Picture</string>
 
 
 </resources>
