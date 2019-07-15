@@ -107,11 +107,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Uri photoURI = FileProvider.getUriForFile(this, "com.example.android.fileprovider", image);
 
         Intent emailIntent = new Intent();
-        emailIntent.setAction(Intent.ACTION_SENDTO);
+        //must use ACTION_SEND not ACTION_SENDTO, the latter cannot handle attachments
+        emailIntent.setAction(Intent.ACTION_SEND);
         emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out my pic!");
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Taken using my CameraApp.");
         emailIntent.putExtra(Intent.EXTRA_STREAM, photoURI);
+        //also, set the type to text/plain so attachment works(not sure why, just know
+        //that it works when you set the type to this)
+        emailIntent.setType("text/plain");
 
         if (emailIntent.resolveActivity(getPackageManager()) != null)
         {
@@ -129,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            galleryAddPic();
+            //galleryAddPic();
             setPic();
         }
     }
